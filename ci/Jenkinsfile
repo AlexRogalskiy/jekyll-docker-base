@@ -1,5 +1,6 @@
 //This is a scripted pipeline syntax and not the declarative pipeline syntax
 node('docker'){
+    checkout scm
     sh "ls"
     sh '''cat > docker-compose.traefik.yml <<EOL
 version: "3"
