@@ -1,0 +1,24 @@
+//This is a scripted pipeline syntax and not the declarative pipeline syntax
+node('docker'){
+
+    sh '''cat > docker-compose.traefik.yml <<EOL
+version: "3"
+services:
+  blog:
+    labels:
+      - "traefik.frontend.rule=Host:staging.docker.localhost, AddPrefix:/build-${BUILD_NUMBER}"
+      - "traefik.backend=jenkins"
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_jenkins_traefik"
+      - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.frontend.entryPoints=http,https"
+    ports:
+      - 4000
+      - 35729
+      - 3000
+      -   80
+EOL'''
+    sh 'docker-compose -f docker-compose.yml -f docker-compose.traefik.yml up -d'
+    sh 'echo new Staging environment Now available at https://staging.docker.localhost/build-${BUILD_NUMBER}'
+}
