@@ -20,6 +20,6 @@ services:
       - 3000
       -   80
 EOL'''
-    sh 'docker-compose -f docker-compose.yml -f docker-compose.traefik.yml up -d'
+    sh 'docker-compose -f docker-compose.staging.yml -f docker-compose.traefik.yml up -d'
     sh 'echo new Staging environment Now available at https://staging.docker.localhost/build-${BUILD_NUMBER}'
 }
