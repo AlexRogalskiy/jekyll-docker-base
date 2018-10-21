@@ -1,0 +1,13 @@
+version: "3"
+services:
+  blog:
+    command: jekyll serve
+    image: andreilhicas/jekyll:latest
+    build:
+      context: ./blog
+      dockerfile: Dockerfile
+    expose:
+      - 4000
+      - 35729
+      - 3000
+      -   80
